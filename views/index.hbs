@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous">
+    <style>
+.img{
+  width: 328px;
+  height: 300px;
+}
+
+.text{
+  height: 200px;
+  overflow-y: auto;
+}
+.footer {
+   position: absolute;
+   left: 0;
+   bottom: -43px;
+   width: 100%;
+   text-align: center;
+}
+
+</style>
+    <title>OCR</title>
+  </head>
+  <body style="background-color: black;color:white;">
+
+
+    <div class="container" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"> 
+      <h1 class="text-center my-4">Optical Character Recognition</h1>
+      <h5 class="text-right"><i>Vision Technologies</i></h5>
+      <h3 id="message">{{msg}}</h3>
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="file-field input-field">
+
+          <div class="input-group my-4">
+            <select class="form-control" name="language" required>
+              <option value="" selected disabled>Page Lanuguage...</option>
+              <option value="eng">English</option>
+              <option value="hin">Hindi</option>
+              <option value="pan">Punjabi</option>
+              <option value="guj">Gujarati</option>
+              <option value="san">Sanskrit</option>
+              <option value="ben">Bengal</option>
+              <option value="kan">Karnatak</option>
+              <option value="mar">Marathi</option>
+              <option value="kan">Karnatak</option>
+            </select>
+          </div>
+          <div class="input-group">
+
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" name="ImageFile"
+                id="ImageFile"
+                aria-describedby="inputGroupFileAddon04"
+                onchange="preview_image(event)">
+              <label class="custom-file-label" for="inputGroupFile04">Choose
+                file</label>
+            </div>
+            <div class="input-group mx-auto my-3">
+              <button type="submit" class="btn btn-outline-danger"
+                id="btnClick">Recognize</button>
+            </div>
+
+          </div>
+        </div>
+      </form>
+
+      <br>
+
+    </div>
+
+    <div class="container text" id="box">
+      <img id="output_image">
+    </div>
+
+    <div class="container">
+      <h3 class="my-3">{{heading}}</h3>
+    </div>
+
+
+    <div class="container mt-4 textValue text" class="language-javascript" id="response">
+      {{text}}
+    </div>
+
+
+<div class="footer mt-2">
+  <p class="my-3">Made With ❤ by <i>Naman Rohilla</i></p>
+</div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+      crossorigin="anonymous"></script>
+
+    <script>
+      let text=document.getElementsByClassName('textValue'); 
+      let inputString=text[0].innerText;
+
+  $('#ImageFile').on('change', function() {
+        let filename = $(this).val();
+        filename = filename.split('\\');
+        $(this).next('.custom-file-label').html(filename[filename.length - 1]);
+      
+        text.innerText="";
+        inputString="";
+  $("#box").css("display", "block");
+
+    });
+
+
+    function preview_image(event) 
+    {
+    let reader = new FileReader();
+    reader.onload = function()
+    {
+    let output = document.getElementById('output_image');
+    output.src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+    }
+
+
+if(inputString!=""){
+  $("#box").css("display", "none");
+ 
+}else{
+  $("#box").css("display", "block");
+}
+
+let btnClick=document.getElementById('btnClick');
+
+btnClick.addEventListener('click',()=>{  
+
+ let message=document.getElementById('message');
+ message.innerHTML=` 
+<div class="d-flex justify-content-center">
+ <div class="spinner-grow text-primary mx-1" role="status">
+</div>
+<div class="spinner-grow text-danger mx-1" role="status">
+</div>
+<div class="spinner-grow text-success mx-1" role="status">
+</div>
+</div>`;
+
+});
+
+
+</script>
+  </body>
+</html>
